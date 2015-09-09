@@ -5,7 +5,7 @@
              style="border:1px inset black;padding:0;width:400px" agc-on-select="handleSelect(selectedItem)">
            
         </div>
-        <div ui-grid="{ data: empData }" class="myGrid"></div>
+        <div ui-grid="gridOptions" ui-grid-pagination class="myGrid"></div>
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -20,13 +20,19 @@
 
         $scope.handleSelect = function (selection) {
             console.log(selection);
-            $scope.empData = $scope.gridData.filter(function (emp) { return emp.Department == selection.row + 1 })
+            if(selection)
+            $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection.row + 1 })
         };
+        $scope.gridOptions = {
+            paginationPageSizes: [25, 50, 75],
+            paginationPageSize: 25,
+            useExternalPagination: true
+        }
         $scope.getData = function () {
             $http.get("/Home/GetEmployees/" + 30000)
                          .success(function (response) {
-                             $scope.gridData = response;
                              $scope.empData = response;
+                             $scope.gridOptions.data = response;
                              var chart = {};
                              chart.type = "PieChart";
                              chart.data = [
