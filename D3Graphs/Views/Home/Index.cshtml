@@ -17,23 +17,31 @@
 <link rel="stylesheet" href="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css"/>
 <script src="~/Scripts/ng-google-chart.js"></script>
 <script>
+    //Init 
     var app = angular.module("AngularCharts", ["ui.grid","googlechart"]);
     app.controller('MainCtrl', function ($scope, $http) {
-
+        //Method for pie chart selection
         $scope.handleSelect = function (selection) {
             console.log(selection);
             if(selection)
             $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection.row + 1 })
         };
+        //Method for resetting grid to default state
         $scope.reset = function () { $scope.gridOptions.data = $scope.empData }
+
+        //The grid options
         $scope.gridOptions = {
             useExternalPagination: true
         }
         $scope.getData = function () {
             $http.get("/Home/GetEmployees/" + 30000)
                          .success(function (response) {
+                             //Global object for resetting grid to default state
                              $scope.empData = response;
+                             //Actual data bound to grid
                              $scope.gridOptions.data = response;
+
+                             //Chart options
                              var chart = {};
                              chart.type = "PieChart";
                              chart.data = [
@@ -49,6 +57,7 @@
                                  is3D: false,
                                  chartArea: { left: 10, top: 10, bottom: 0, height: "100%" }
                              };
+                             //Assigning chart options to the actual chart object on the scope
                              $scope.chart = chart;
                          })
                          .error(function (response) {
