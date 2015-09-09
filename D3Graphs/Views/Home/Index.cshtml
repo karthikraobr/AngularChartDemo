@@ -1,10 +1,12 @@
 ﻿<div ng-app="AngularCharts">
     <div ng-controller="MainCtrl">
         <button ng-click="getData()"> Fire!</button>
+        <button ng-click="reset()"> Reset!</button>
         <div google-chart chart="chart"
              style="border:1px inset black;padding:0;width:400px" agc-on-select="handleSelect(selectedItem)">
            
         </div>
+        
         <div ui-grid="gridOptions" ui-grid-pagination class="myGrid"></div>
     </div>
 </div>
@@ -23,9 +25,8 @@
             if(selection)
             $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection.row + 1 })
         };
+        $scope.reset = function () { $scope.gridOptions.data = $scope.empData }
         $scope.gridOptions = {
-            paginationPageSizes: [25, 50, 75],
-            paginationPageSize: 25,
             useExternalPagination: true
         }
         $scope.getData = function () {
