@@ -1,0 +1,55 @@
+﻿<div ng-app="AngularCharts">
+    <div ng-controller="MainCtrl">
+        <button ng-click="getData()"> Fire!</button>
+        <div google-chart chart="chart"
+             style="border:1px inset black;padding:0;width:400px" agc-on-select="handleSelect(selectedItem)">
+           
+        </div>
+        <div ui-grid="{ data: empData }" class="myGrid"></div>
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+<script src="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
+<link rel="stylesheet" href="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css"/>
+<script src="~/Scripts/ng-google-chart.js"></script>
+<script>
+    var app = angular.module("AngularCharts", ["ui.grid","googlechart"]);
+    app.controller('MainCtrl', function ($scope, $http) {
+
+        $scope.handleSelect = function (selection) {
+            console.log(selection);
+            $scope.empData = $scope.gridData.filter(function (emp) { return emp.Department == selection.row + 1 })
+        };
+        $scope.getData = function () {
+            $http.get("/Home/GetEmployees/" + 30000)
+                         .success(function (response) {
+                             $scope.gridData = response;
+                             $scope.empData = response;
+                             var chart = {};
+                             chart.type = "PieChart";
+                             chart.data = [
+                                ['Department', 'EmpNumber'],
+                                ['Department 1', response.filter(function (emp) { return emp.Department == 1 }).length],
+                                ['Department 2', response.filter(function (emp) { return emp.Department == 2 }).length],
+                                ['Department 3', response.filter(function (emp) { return emp.Department == 3 }).length],
+                             ];
+                             chart.options = {
+                                 displayExactValues: true,
+                                 width: 400,
+                                 height: 200,
+                                 is3D: false,
+                                 chartArea: { left: 10, top: 10, bottom: 0, height: "100%" }
+                             };
+                             $scope.chart = chart;
+                         })
+                         .error(function (response) {
+                             $scope.error = response.data;
+                             $scope.status = "Page load failed.";
+                         });
+
+
+        }
+    });
+</script>
