@@ -31,7 +31,13 @@
 
         //The grid options
         $scope.gridOptions = {
-            useExternalPagination: true
+            paginationPageSizes: [25, 50, 75],
+            paginationPageSize: 25,
+            columnDefs: [
+              { name: 'Id' },
+              { name: 'Name' },
+              { name: 'Department' }
+            ]
         }
         $scope.getData = function () {
             $http.get("/Home/GetEmployees/" + 30000)
