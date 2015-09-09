@@ -7,7 +7,7 @@
            
         </div>
         
-        <div ui-grid="gridOptions" ui-grid-pagination class="myGrid"></div>
+        <div ui-grid="gridOptions" ui-grid-pagination class="myGrid" ng-show="IsDataAvailable"></div>
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -20,6 +20,8 @@
     //Init 
     var app = angular.module("AngularCharts", ["ui.grid","googlechart"]);
     app.controller('MainCtrl', function ($scope, $http) {
+
+        $scope.IsDataAvailable = false;
         //Method for pie chart selection
         $scope.handleSelect = function (selection) {
             console.log(selection);
@@ -41,6 +43,7 @@
                              //Actual data bound to grid
                              $scope.gridOptions.data = response;
 
+                             $scope.IsDataAvailable = true;
                              //Chart options
                              var chart = {};
                              chart.type = "PieChart";
@@ -54,7 +57,7 @@
                                  displayExactValues: true,
                                  width: 400,
                                  height: 200,
-                                 is3D: false,
+                                 is3D: true,
                                  chartArea: { left: 10, top: 10, bottom: 0, height: "100%" }
                              };
                              //Assigning chart options to the actual chart object on the scope
