@@ -2,12 +2,11 @@
     <div ng-controller="MainCtrl">
         <button ng-click="getData()"> Fire!</button>
         <button ng-click="reset()"> Reset!</button>
-        <div google-chart chart="chart"
-             style="border:1px inset black;padding:0;width:400px" agc-on-select="handleSelect(selectedItem)">
+        <div google-chart chart="chart" agc-on-select="handleSelect(selectedItem)">
            
         </div>
         
-        <div ui-grid="gridOptions" ui-grid-grouping class="myGrid"></div>
+        <div ui-grid="gridOptions" ui-grid-grouping class="myGrid" ></div>
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -15,6 +14,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
 <script src="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
 <link rel="stylesheet" href="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css"/>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
 <script src="~/Scripts/ng-google-chart.js"></script>
 <script>
     //Init 
@@ -36,7 +36,7 @@
             enableFiltering: true,
             enableColumnResizing: true,
             columnDefs: [
-              { name: 'Id' },
+              { name: 'Id',width:20 },
               { name: 'Name' },
               { name: 'Department' },
               { name: 'Date Of Birth', field: 'DOB' },
