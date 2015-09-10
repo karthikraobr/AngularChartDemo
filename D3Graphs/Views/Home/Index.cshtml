@@ -84,11 +84,10 @@
                              $scope.empData = response.Employees;
                              //Actual data bound to grid
                              $scope.gridOptions.data = response.Employees;
-                             $scope.labels = response.Departments;
+                             $scope.labels = response.Departments.map(function (dept) { return "Department "+ dept});
                              
                              $scope.data = [];
                              response.Departments.forEach(function (dept) {
-                                 console.log($scope.empData.filter(function (emp) { return emp.Department == dept }).length);
                                  $scope.data.push($scope.empData.filter(function (emp) { return emp.Department == dept }).length)
                              });
                             
