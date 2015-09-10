@@ -25,10 +25,8 @@
     app.controller('MainCtrl', function ($scope, $http) {
         //Method for pie chart selection
         $scope.onClick = function (selection) {
-            debugger;
-            console.log(selection);
             if(selection)
-                $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection[0].label })
+                $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection[0].label.replace(/\D/g, '') })
         };
         //Method for resetting grid to default state
         $scope.reset = function () { $scope.gridOptions.data = $scope.empData }
