@@ -39,6 +39,7 @@ namespace D3Graphs.Controllers
             result.Employees = employees;
             var groupedEmployees = employees.GroupBy(p => p.Department).ToList();
             result.Departments = groupedEmployees.Select(x => x.Key).ToList();
+            result.Departments.Sort();
             return new JsonResult()
             {
                 Data = result,
