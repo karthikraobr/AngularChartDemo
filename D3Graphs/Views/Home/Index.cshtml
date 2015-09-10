@@ -69,6 +69,14 @@
                                 ['Department 9', response.filter(function (emp) { return emp.Department == 9 }).length],
                                 ['Department 10', response.filter(function (emp) { return emp.Department == 10 }).length]
                              ];
+                             chart.formatters = {
+                                 "number": [
+                                   {
+                                       "columnNum": 1,
+                                       "pattern": "Total Employees #,##0.00"
+                                   }
+                                 ]
+                             }
                              chart.options = {
                                  displayExactValues: true,
                                  width: 600,
