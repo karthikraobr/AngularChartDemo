@@ -18,7 +18,7 @@
 <script src="~/Scripts/ng-google-chart.js"></script>
 <script>
     //Init 
-    var app = angular.module("AngularCharts", ["ui.grid","ui.grid.grouping","googlechart"]);
+    var app = angular.module("AngularCharts", ["ui.grid","ui.grid.grouping","ui.grid.resizeColumns","googlechart"]);
     app.controller('MainCtrl', function ($scope, $http) {
         //Method for pie chart selection
         $scope.handleSelect = function (selection) {
@@ -34,11 +34,12 @@
             enableGridMenu: true,
             showGridFooter: true,
             enableFiltering: true,
+            enableColumnResizing: true,
             columnDefs: [
               { name: 'Id' },
               { name: 'Name' },
               { name: 'Department' },
-              { name: 'Date Of Birth' , field:'DOB'  },
+              { name: 'Date Of Birth', field: 'DOB' },
               { name: 'Address' },
               { name: 'Category' },
               { name: 'Salary' }
