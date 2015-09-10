@@ -16,7 +16,7 @@ namespace D3Graphs.Controllers
 
         public ActionResult GetEmployees(int? count)
         {
-            if (count == null) count = 15000;
+            if (count == null) count = 40000;
             if (count > 50000) count = 50000;
 
             IList<EmployeeModel> _comments = new List<EmployeeModel>();
@@ -28,7 +28,7 @@ namespace D3Graphs.Controllers
                 {
                     Id = i,
                     Name = "John Doe Number " + i,
-                    Department = r.Next(1, 4)
+                    Department = r.Next(1, 11)
                 });
             }
 
