@@ -2,11 +2,11 @@
     <div ng-controller="MainCtrl">
         <button ng-click="getData()"> Fire!</button>
         <button ng-click="reset()"> Reset!</button>
-        <div google-chart chart="chart" agc-on-select="handleSelect(selectedItem)">
-           
+        <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-click="onClick"></canvas>    
+        <div ui-grid="gridOptions" ui-grid-grouping class="myGrid"></div>   
         </div>
         
-        <div ui-grid="gridOptions" ui-grid-grouping class="myGrid" ></div>
+        
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -15,16 +15,20 @@
 <script src="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
 <link rel="stylesheet" href="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css"/>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+<script src="//cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+<link rel="/cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.css"/>
 <script src="~/Scripts/ng-google-chart.js"></script>
 <script>
-    //Init 
-    var app = angular.module("AngularCharts", ["ui.grid","ui.grid.grouping","ui.grid.resizeColumns","googlechart"]);
+    //Init
+    var app = angular.module("AngularCharts", ["ui.grid", "ui.grid.grouping", "ui.grid.resizeColumns", "chart.js"]);
     app.controller('MainCtrl', function ($scope, $http) {
         //Method for pie chart selection
-        $scope.handleSelect = function (selection) {
+        $scope.onClick = function (selection) {
+            debugger;
             console.log(selection);
             if(selection)
-            $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection.row + 1 })
+                $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection[0].label })
         };
         //Method for resetting grid to default state
         $scope.reset = function () { $scope.gridOptions.data = $scope.empData }
@@ -35,58 +39,33 @@
             showGridFooter: true,
             enableFiltering: true,
             enableColumnResizing: true,
-            columnDefs: [
-              { name: 'Id',width:20 },
+            columnDefs:
+                [
+              { name: 'Id' },
               { name: 'Name' },
-              { name: 'Department' },
+              { name: 'Department'},
               { name: 'Date Of Birth', field: 'DOB' },
               { name: 'Address' },
-              { name: 'Category' },
+              { name: 'Category'  },
               { name: 'Salary' }
-            ]
+                ]
         }
         $scope.getData = function () {
+
             $http.get("/Home/GetEmployees/" + 30000)
                          .success(function (response) {
                              //Global object for resetting grid to default state
-                             $scope.empData = response;
+                             $scope.empData = response.Employees;
                              //Actual data bound to grid
-                             $scope.gridOptions.data = response;
-
+                             $scope.gridOptions.data = response.Employees;
+                             $scope.labels = response.Departments;
                              
-                             //Chart options
-                             var chart = {};
-                             chart.type = "PieChart";
-                             chart.data = [
-                                ['Department', 'EmpNumber'],
-                                ['Department 1', response.filter(function (emp) { return emp.Department == 1 }).length],
-                                ['Department 2', response.filter(function (emp) { return emp.Department == 2 }).length],
-                                ['Department 3', response.filter(function (emp) { return emp.Department == 3 }).length],
-                                ['Department 4', response.filter(function (emp) { return emp.Department == 4 }).length],
-                                ['Department 5', response.filter(function (emp) { return emp.Department == 5 }).length],
-                                ['Department 6', response.filter(function (emp) { return emp.Department == 6 }).length],
-                                ['Department 7', response.filter(function (emp) { return emp.Department == 7 }).length],
-                                ['Department 8', response.filter(function (emp) { return emp.Department == 8 }).length],
-                                ['Department 9', response.filter(function (emp) { return emp.Department == 9 }).length],
-                                ['Department 10', response.filter(function (emp) { return emp.Department == 10 }).length]
-                             ];
-                             chart.formatters = {
-                                 "number": [
-                                   {
-                                       "columnNum": 1,
-                                       "pattern": "Total Employees #,##0.00"
-                                   }
-                                 ]
-                             }
-                             chart.options = {
-                                 displayExactValues: true,
-                                 width: 600,
-                                 height: 400,
-                                 is3D: true,
-                                 chartArea: { left: 10, top: 10, bottom: 0, height: "100%" }
-                             };
-                             //Assigning chart options to the actual chart object on the scope
-                             $scope.chart = chart;
+                             $scope.data = [];
+                             response.Departments.forEach(function (dept) {
+                                 console.log($scope.empData.filter(function (emp) { return emp.Department == dept }).length);
+                                 $scope.data.push($scope.empData.filter(function (emp) { return emp.Department == dept }).length)
+                             });
+                            
                          })
                          .error(function (response) {
                              $scope.error = response.data;

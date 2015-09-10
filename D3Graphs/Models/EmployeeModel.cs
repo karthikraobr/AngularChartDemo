@@ -16,4 +16,11 @@ namespace D3Graphs.Models
         public float Salary { get; set; }
         public int Category { get; set; }
     }
+
+
+    public class Result
+    {
+        public List<EmployeeModel> Employees { get; set; }
+        public List<int> Departments { get; set; }
+    }
 }

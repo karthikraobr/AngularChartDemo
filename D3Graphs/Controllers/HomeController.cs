@@ -19,12 +19,13 @@ namespace D3Graphs.Controllers
             if (count == null) count = 40000;
             if (count > 50000) count = 50000;
 
-            IList<EmployeeModel> _comments = new List<EmployeeModel>();
+            var result = new Result();
             Random r = new Random();
             int rInt = r.Next(0, 100); //for ints
+            var employees = new List<EmployeeModel>();
             for (int i = 1; i <= count; i++)
             {
-                _comments.Add(new EmployeeModel
+                employees.Add(new EmployeeModel
                 {
                     Id = i,
                     Name = "John Doe Number " + i,
@@ -35,10 +36,12 @@ namespace D3Graphs.Controllers
                     Salary=i,
                 });
             }
-
+            result.Employees = employees;
+            var groupedEmployees = employees.GroupBy(p => p.Department).ToList();
+            result.Departments = groupedEmployees.Select(x => x.Key).ToList();
             return new JsonResult()
             {
-                Data = _comments,
+                Data = result,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
