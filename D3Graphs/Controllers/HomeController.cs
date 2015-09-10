@@ -28,7 +28,11 @@ namespace D3Graphs.Controllers
                 {
                     Id = i,
                     Name = "John Doe Number " + i,
-                    Department = r.Next(1, 11)
+                    Department = r.Next(1, 11),
+                    DOB = new DateTime(2011,1,1),
+                    Address = "Address"+i,
+                    Category = r.Next(1, 10),
+                    Salary=i,
                 });
             }
 

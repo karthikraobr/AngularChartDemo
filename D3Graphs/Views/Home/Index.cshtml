@@ -7,7 +7,7 @@
            
         </div>
         
-        <div ui-grid="gridOptions" ui-grid-pagination class="myGrid"></div>
+        <div ui-grid="gridOptions" ui-grid-grouping class="myGrid"></div>
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -18,7 +18,7 @@
 <script src="~/Scripts/ng-google-chart.js"></script>
 <script>
     //Init 
-    var app = angular.module("AngularCharts", ["ui.grid","googlechart"]);
+    var app = angular.module("AngularCharts", ["ui.grid","ui.grid.grouping","googlechart"]);
     app.controller('MainCtrl', function ($scope, $http) {
         //Method for pie chart selection
         $scope.handleSelect = function (selection) {
@@ -31,13 +31,17 @@
 
         //The grid options
         $scope.gridOptions = {
-            enableGridMenu: true, showGridFooter: true,
-            paginationPageSizes: [25, 50, 75],
-            paginationPageSize: 25,
+            enableGridMenu: true,
+            showGridFooter: true,
+            enableFiltering: true,
             columnDefs: [
               { name: 'Id' },
               { name: 'Name' },
-              { name: 'Department' }
+              { name: 'Department' },
+              { name: 'Date Of Birth' , field:'DOB'  },
+              { name: 'Address' },
+              { name: 'Category' },
+              { name: 'Salary' }
             ]
         }
         $scope.getData = function () {
@@ -70,7 +74,6 @@
                                  width: 400,
                                  height: 200,
                                  is3D: true,
-                                 chartArea: { left: 10, top: 10, bottom: 0, height: "100%" }
                              };
                              //Assigning chart options to the actual chart object on the scope
                              $scope.chart = chart;
