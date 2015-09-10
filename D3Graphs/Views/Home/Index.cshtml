@@ -25,7 +25,6 @@
     app.controller('MainCtrl', function ($scope, $http) {
         //Method for pie chart selection
         $scope.onClick = function (selection) {
-            debugger;
             if(selection)
                 $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection[0].label.replace(/\D/g, '') })
         };
@@ -86,7 +85,6 @@
                              response.Departments.forEach(function (dept) {
                                  $scope.data.push( $scope.empData.filter(function (emp) { return emp.Department == dept }).length)
                              });
-                             debugger;
                          })
                          .error(function (response) {
                              $scope.error = response.data;
