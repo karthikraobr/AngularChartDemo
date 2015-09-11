@@ -19,7 +19,6 @@ namespace D3Graphs
                         "~/Scripts/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/site.css",
                          "~/Content/ui-grid.min.css",
                          "~/Content/bootstrap.css",
                         "~/Content/angular-chart.css"));
