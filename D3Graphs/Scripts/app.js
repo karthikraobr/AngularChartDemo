@@ -1,6 +1,8 @@
 ﻿//Init
 var app = angular.module("AngularCharts", ["ui.grid", "ui.grid.grouping", "ui.grid.resizeColumns", "chart.js"]);
 app.controller('MainCtrl', function ($scope, $http) {
+    $scope.loading = "Fetch";
+    //Hide Grid on pageload
     $scope.showGrid = false;
     //Method for pie chart selection
     $scope.onClick = function (selection) {
@@ -55,6 +57,7 @@ app.controller('MainCtrl', function ($scope, $http) {
     }
 
     $scope.getData = function () {
+        $scope.loading="Fetching..."
         $http.get("/Home/GetEmployees/" + 30000)
                      .success(function (response) {
                          //Global object for resetting grid to default state
@@ -70,6 +73,7 @@ app.controller('MainCtrl', function ($scope, $http) {
                          response.Departments.forEach(function (dept) {
                              $scope.data.push($scope.empData.filter(function (emp) { return emp.Department == dept }).length)
                          });
+                         $scope.loading = "Fetch"
                      })
                      .error(function (response) {
                          $scope.error = response.data;

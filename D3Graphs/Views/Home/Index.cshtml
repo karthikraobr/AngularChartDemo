@@ -1,8 +1,10 @@
 ﻿<div ng-app="AngularCharts">
     <div ng-controller="MainCtrl">
-        <button class="btn btn-primary" ng-click="getData()"> Fetch</button>
-        <button class="btn btn-warning" ng-click="reset()"> Reset</button>
+        <div class="btn-container">
+            <button class="btn btn-primary" ng-click="getData()"> {{loading}}</button>
+            <button class="btn btn-warning" ng-click="reset()"> Reset</button>
+        </div>
         <canvas id="pie" tc-chartjs-pie class="chart chart-pie" chart-data="data" chart-labels="labels" chart-click="onClick" chart-options="chartOptions" chart-legend="true"></canvas>
         <div ui-grid="gridOptions" ui-grid-grouping class="myGrid" ng-if="showGrid"></div>   
-        </div  
     </div>
+</div>
