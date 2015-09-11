@@ -1,5 +1,5 @@
 ﻿//Init
-var app = angular.module("AngularCharts", ["ui.grid", "ui.grid.grouping", "ui.grid.resizeColumns", "chart.js"]);
+var app = angular.module("AngularCharts", ["ui.grid", "ui.grid.grouping", "ui.grid.resizeColumns","ui.grid.pagination", "chart.js"]);
 app.controller('MainCtrl', function ($scope, $http) {
     $scope.loading = "Fetch";
     //Hide Grid on pageload
@@ -19,6 +19,8 @@ app.controller('MainCtrl', function ($scope, $http) {
         showGridFooter: true,
         enableFiltering: true,
         enableColumnResizing: true,
+        paginationPageSizes: [25, 50, 75],
+        paginationPageSize: 25,
         columnDefs:
             [
           { name: 'Id' },

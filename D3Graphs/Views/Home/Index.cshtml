@@ -5,6 +5,6 @@
             <button class="btn btn-warning" ng-click="reset()"> Reset</button>
         </div>
         <canvas id="pie" tc-chartjs-pie class="chart chart-pie" chart-data="data" chart-labels="labels" chart-click="onClick" chart-options="chartOptions" chart-legend="true"></canvas>
-        <div ui-grid="gridOptions" ui-grid-grouping class="myGrid" ng-if="showGrid"></div>   
+        <div ui-grid="gridOptions" ui-grid-grouping ui-grid-pagination class="myGrid" ng-if="showGrid"></div>   
     </div>
 </div>
