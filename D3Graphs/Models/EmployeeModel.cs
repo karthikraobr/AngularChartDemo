@@ -11,7 +11,7 @@ namespace D3Graphs.Models
         public int Department { get; set; }
         public string Name { get; set; }
 
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
         public string Address { get; set; }
         public float Salary { get; set; }
         public int Category { get; set; }

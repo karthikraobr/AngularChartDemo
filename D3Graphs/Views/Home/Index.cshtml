@@ -6,20 +6,17 @@
         <div id="js-legend" class="chart-legend"></div>
         <div ui-grid="gridOptions" ui-grid-grouping class="myGrid"></div>   
         </div>
-        
-        
+      
     </div>
-</div>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
-<script src="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
-<link rel="stylesheet" href="//cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css"/>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
-<script src="//cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
-<link rel="/cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.css"/>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/ui-grid.min.js"></script>
+<script src="~/Scripts/Chart.min.js"></script>
+<script src="~/Scripts/angular-chart.min.js"></script>
+<link href="~/Content/ui-grid.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/angular-chart.css" rel="stylesheet" />
 <style>
     chart-legend li {
         list-style: none;
@@ -55,7 +52,7 @@
               { name: 'Id' },
               { name: 'Name' },
               { name: 'Department'},
-              { name: 'Date Of Birth', field: 'DOB' },
+              { name: 'Date Of Birth', field: 'DOB', type: 'date', cellFilter: 'date:\'yyyy-MM-dd\'' },
               { name: 'Address' },
               { name: 'Category'  },
               { name: 'Salary' }
