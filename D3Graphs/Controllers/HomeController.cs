@@ -14,24 +14,24 @@ namespace D3Graphs.Controllers
             return View();
         }
 
-        public ActionResult GetEmployees(int? count)
+        public ActionResult GetEmployees(int? id)
         {
-            if (count == null) count = 40000;
-            if (count > 50000) count = 50000;
+            if (id == null) id = 40000;
+            if (id > 50000) id = 50000;
 
             var result = new Result();
             Random r = new Random();
             int rInt = r.Next(0, 100); //for ints
             var employees = new List<EmployeeModel>();
-            for (int i = 1; i <= count; i++)
+            for (int i = 1; i <= id; i++)
             {
                 employees.Add(new EmployeeModel
                 {
                     Id = i,
                     Name = "John Doe Number " + i,
                     Department = r.Next(1, 11),
-                    DOB = new DateTime(2011,1,1).ToShortDateString(),
-                    Address = "Address"+i,
+                    DOB = RandomDay().ToShortDateString(),
+                    Address = "Address "+i,
                     Category = r.Next(1, 10),
                     Salary=i,
                 });
@@ -46,6 +46,14 @@ namespace D3Graphs.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
+        }
+
+        DateTime RandomDay()
+        {
+            DateTime start = new DateTime(1950, 1, 1);
+            Random gen = new Random();
+            int range = (DateTime.Today - start).Days;
+            return start.AddDays(gen.Next(range));
         }
     }
 }
