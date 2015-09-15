@@ -4,7 +4,6 @@ app.controller('MainCtrl', function ($scope, $http) {
     $scope.loading = "Fetch";
     //Hide Grid on pageload
     $scope.showGrid = false;
-
     $scope.isChartFiltered = false;
     //Method for pie chart selection
     $scope.onClick = function (selection) {
@@ -40,7 +39,9 @@ app.controller('MainCtrl', function ($scope, $http) {
         enableFiltering: true,
         enableColumnResizing: true,
         paginationPageSizes: [25, 50, 75],
-        paginationPageSize: 25
+        paginationPageSize: 25,
+        enableColumnMenus: false,
+        showFilter:false
     }
     //The grid options
     if (window.mobilecheck()) {
