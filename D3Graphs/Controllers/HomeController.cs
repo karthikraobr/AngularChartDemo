@@ -34,11 +34,14 @@ namespace D3Graphs.Controllers
                     Address = "Address "+i,
                     Category = r.Next(1, 10),
                     Salary=i,
+                    Country=GetRendonString()
                 });
             }
             result.Employees = employees;
             var groupedEmployees = employees.GroupBy(p => p.Department).ToList();
             result.Departments = groupedEmployees.Select(x => x.Key).ToList();
+            var groupedCountries = employees.GroupBy(p => p.Country).ToList();
+            result.Countries = groupedCountries.Select(x => x.Key).ToList(); 
             result.Departments.Sort();
             return new JsonResult()
             {
@@ -54,6 +57,17 @@ namespace D3Graphs.Controllers
             Random gen = new Random();
             int range = (DateTime.Today - start).Days;
             return start.AddDays(gen.Next(range));
+        }
+
+        string GetRendonString()
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            var result = new string(
+                Enumerable.Repeat(chars, 8)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+            return result;
         }
     }
 }

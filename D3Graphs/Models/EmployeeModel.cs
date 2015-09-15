@@ -15,12 +15,14 @@ namespace D3Graphs.Models
         public string Address { get; set; }
         public float Salary { get; set; }
         public int Category { get; set; }
+        public string Country { get; set; }
     }
 
 
     public class Result
     {
         public List<EmployeeModel> Employees { get; set; }
+        public List<string> Countries { get; set; }
         public List<int> Departments { get; set; }
     }
 }

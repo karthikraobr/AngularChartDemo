@@ -4,14 +4,36 @@ app.controller('MainCtrl', function ($scope, $http) {
     $scope.loading = "Fetch";
     //Hide Grid on pageload
     $scope.showGrid = false;
+
+    $scope.isChartFiltered = false;
     //Method for pie chart selection
     $scope.onClick = function (selection) {
-        if (selection)
-            $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Department == selection[0].label.replace(/\D/g, '') })
+        if (selection) {
+            if ($scope.isChartFiltered == true) {
+                $scope.gridOptions.data = $scope.filteredByCountry.filter(function (emp) { return emp.Department == selection[0].label.replace(/\D/g, '') })
+            } else {
+                $scope.gridOptions.data = $scope.empData.filter(function (emp) { return emp.Country == selection[0].label })
+                $scope.labels = $scope.departments.map(function (dept) { return "Department " + dept });
+                $scope.data = [];
+                $scope.filteredByCountry = $scope.empData.filter(function (emp) { return emp.Country == selection[0].label })
+                $scope.departments.forEach(function (dept) {
+                    $scope.data.push($scope.filteredByCountry.filter(function (emp) { return emp.Department == dept }).length)
+                });
+                $scope.isChartFiltered = true;
+            }
+
+        }
+            
     };
 
     //Method for resetting grid to default state
-    $scope.reset = function () { $scope.gridOptions.data = $scope.empData }
+    $scope.reset = function () {
+        $scope.gridOptions.data = $scope.empData;
+        $scope.data = $scope.initialChartData;
+        $scope.labels = $scope.countries;
+        $scope.isChartFiltered = false;
+
+    }
     $scope.gridOptions = {
         enableGridMenu: true,
         showGridFooter: true,
@@ -36,7 +58,8 @@ app.controller('MainCtrl', function ($scope, $http) {
               { name: 'Date Of Birth', field: 'DOB', type: 'date', cellFilter: 'date:\'yyyy-MM-dd\'' },
               { name: 'Address' },
               { name: 'Category' },
-              { name: 'Salary' }
+              { name: 'Salary' },
+              { name: 'Country' }
             ]
     }
 
@@ -76,12 +99,15 @@ app.controller('MainCtrl', function ($scope, $http) {
 
                          $scope.showGrid = true;
                          //Filtering labels from ajax response
-                         $scope.labels = response.Departments.map(function (dept) { return "Department " + dept });
+                         $scope.departments = response.Departments;
+                         $scope.countries = response.Countries;
+                         $scope.labels = response.Countries;
                          //Data fro the charts
                          $scope.data = [];
-                         response.Departments.forEach(function (dept) {
-                             $scope.data.push($scope.empData.filter(function (emp) { return emp.Department == dept }).length)
+                         response.Countries.forEach(function (country) {
+                             $scope.data.push($scope.empData.filter(function (emp) { return emp.Country == country }).length)
                          });
+                         $scope.initialChartData = $scope.data;
                          $scope.loading = "Fetch"
                      })
                      .error(function (response) {
