@@ -40,8 +40,7 @@ app.controller('MainCtrl', function ($scope, $http) {
         enableColumnResizing: true,
         paginationPageSizes: [25, 50, 75],
         paginationPageSize: 25,
-        enableColumnMenus: false,
-        showFilter:false
+        enableColumnMenus: false
     }
     //The grid options
     if (window.mobilecheck()) {
