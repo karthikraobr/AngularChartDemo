@@ -51,6 +51,11 @@ namespace D3Graphs.Controllers
             };
         }
 
+        public ActionResult LineChart()
+        {
+            return View();
+        }
+
         DateTime RandomDay()
         {
             DateTime start = new DateTime(1950, 1, 1);
